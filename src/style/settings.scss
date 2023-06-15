@@ -1,0 +1,104 @@
+@import 'resize.scss';
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+:root {
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button{
+    background: none;
+    cursor: pointer;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 2.5rem;
+  line-height: 1.1;
+}
+
+#app {
+  margin: 0 auto;
+}
+
+/** common **/
+ul{
+    list-style: none;
+}
+
+.cp{
+    cursor: pointer;
+}
+
+
+/** display **/
+article{
+    padding-top: 5%;
+}
+.container_inner{
+    width: 80%;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.m0ato{
+    margin: 0 auto;
+}
+
+.flex{
+    display: flex;
+}
+
+.jcsb{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.jcc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.max_width{
+    width: min(90%, 1200px);
+}
+
+/** text / font **/
+.txt_center{
+    text-align: center;
+}
+
+.title{
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 2%;
+    color: #44435f;
+    text-transform: uppercase;
+}
+
+.subTitle{
+    color: #424e6a;
+    font-weight: 500;
+}
+
+.ko_font{
+    font-family: 'Nanum Gothic', sans-serif;
+}
