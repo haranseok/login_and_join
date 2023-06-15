@@ -18,6 +18,7 @@ const router = createRouter({
         TheHeader,
         default: import("@/pages/Home.vue"),
       },
+      meta: { auth: true },
     },
     {
       path: "/movies/:heropy",

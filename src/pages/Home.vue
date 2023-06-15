@@ -1,8 +1,14 @@
 <template>
-  <div>
-    <h1>Home</h1>
-    <input type="text" v-model="searchText" @keydown.enter="searchMovies" />
-    <v-btn @click="searchMovies">검색</v-btn>
+  <article>
+    <div class="searchBox jcsb">
+      <input
+        type="text"
+        v-model="searchText"
+        @keydown.enter="searchMovies"
+        placeholder="검색어를 입력해주세요."
+      />
+      <v-btn @click="searchMovies">검색</v-btn>
+    </div>
     <ul>
       <li v-for="movie in movies" :key="movie">
         <router-link :to="`/movies/${movie.imdbID}`">{{
@@ -11,7 +17,7 @@
       </li>
     </ul>
     <v-btn @click="link">상세보기</v-btn>
-  </div>
+  </article>
 </template>
 
 <script lang="ts" setup>
@@ -32,4 +38,19 @@ const link = () => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.searchBox {
+  width: 600px;
+  height: 50px;
+  margin: 0 auto;
+  input {
+    width: 85%;
+    height: 45px;
+    padding: 0 10px;
+    border-bottom: 1px solid #eee;
+    &::placeholder {
+      font-size: 14px;
+    }
+  }
+}
+</style>
