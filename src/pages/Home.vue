@@ -10,17 +10,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, inject } from "vue";
+import { ref } from "vue";
+import { MoviceContentService } from "@/service/MoviceServics";
 const searchText = ref("");
 const movies = ref([]);
-
-const axios = inject("$axios");
-interface Movie {}
-
+// console.log(VUE_APP_TEST);
 const searchMovies = async () => {
-  let res = await axios.get(
-    `https://www.omdbapi.com?apikey=7035c60c&s=${searchText.value}`
-  );
+  let res = await MoviceContentService.getSearchMovice(searchText.value);
   console.log(res);
 };
 </script>
