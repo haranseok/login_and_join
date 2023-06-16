@@ -1,55 +1,69 @@
 <template>
+  <main>
+    <img src="@/assets/images/mainTitle.png" alt="cinema" data-aos="zoom-in" />
+  </main>
   <article>
-    <div class="searchBox jcsb">
-      <input
-        type="text"
-        v-model="searchText"
-        @keydown.enter="searchMovies"
-        placeholder="검색어를 입력해주세요."
-      />
-      <v-btn @click="searchMovies">검색</v-btn>
-    </div>
+    <Search @searchEnter="searchEnter" />
     <ul>
-      <li v-for="movie in movies" :key="movie">
-        <router-link :to="`/movies/${movie.imdbID}`">{{
-          movie.Title
-        }}</router-link>
+      <li v-for="movie in movies" :key="movie" data-aos="fade-up">
+        <router-link :to="`/movies/${movie.imdbID}`">
+          <div
+            class="img"
+            :style="{ backgroundImage: `url(${movie.Poster})` }"
+          ></div>
+          <div class="text_box">
+            <h4>{{ movie.Title }}</h4>
+            <p>{{ movie.Year }}</p>
+          </div>
+        </router-link>
       </li>
     </ul>
-    <v-btn @click="link">상세보기</v-btn>
   </article>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import { MovieContentService } from "@/service/MovieServics";
 
-const router = useRouter();
-const searchText = ref("");
-const movies = ref({});
-const searchMovies = async () => {
-  let res = await MovieContentService.getSearchMovie(searchText.value);
-  movies.value = res.Search;
-};
+import Search from "@/components/items/DefualtSearch.vue";
 
-const link = () => {
-  router.push("/movies/detail");
+const movies = ref({});
+const searchEnter = async (val: string) => {
+  let res = await MovieContentService.getSearchMovie(val);
+  console.log(res);
+  movies.value = res.Search;
 };
 </script>
 
 <style lang="scss" scoped>
-.searchBox {
-  width: 600px;
-  height: 50px;
-  margin: 0 auto;
-  input {
-    width: 85%;
-    height: 45px;
-    padding: 0 10px;
-    border-bottom: 1px solid #eee;
-    &::placeholder {
-      font-size: 14px;
+main {
+  width: 100%;
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(255, 249, 237);
+}
+.img {
+  width: 150px;
+  height: calc(150px * 3 / 2);
+  background-size: cover;
+}
+
+ul {
+  width: 1000px;
+  margin: 5% auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2%;
+  li {
+    width: 150px;
+    margin: 3% 0;
+    .text_box {
+      margin-top: 10px;
+      h4 {
+        font-size: 1.2rem;
+      }
     }
   }
 }

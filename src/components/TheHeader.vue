@@ -38,7 +38,7 @@ const navigations = ref([
 header {
   width: 100%;
   height: 60px;
-  background: rgb(255, 243, 224);
+  position: fixed;
 }
 
 .inner_container {

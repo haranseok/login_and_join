@@ -15,7 +15,11 @@ const pinia = createPinia();
 app.provide("$axios", Axios);
 
 loadFonts();
-app.use(Aos.init());
+app.use(
+  Aos.init({
+    duration: 1000,
+  })
+);
 app.use(i18n);
 app.use(pinia);
 app.use(vuetify);
