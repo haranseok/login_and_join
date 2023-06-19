@@ -2,7 +2,7 @@
   <div class="container">
     <div data-aos="zoom-in" data-aos-easing="ease" data-aos-delay="250">
       <v-card>
-        <p><strong>admin</strong> dashboard</p>
+        <p><strong>login</strong> template</p>
         <div class="form_box">
           <input type="text" placeholder="id" />
           <div class="pw_box">
@@ -17,8 +17,13 @@
               :icon="isShow === true ? 'mdi-eye-off' : 'mdi-eye'"
             />
           </div>
+          <v-btn @click="doLogin" block color="#fec422" rounded="xs"
+            >Login</v-btn
+          >
         </div>
-        <v-btn @click="doLogin" block color="#fec422" rounded="xs">Login</v-btn>
+        <div class="social_box">
+          <span class="line">or</span>
+        </div>
       </v-card>
     </div>
   </div>
@@ -31,6 +36,10 @@ import { ref } from "vue";
 const router = useRouter();
 const isShow = ref(false);
 
+const user = ref({
+  username: "test",
+  password: "test1234*",
+});
 const doLogin = () => {
   router.push("/home");
 };
@@ -86,10 +95,31 @@ input {
       width: 100%;
     }
   }
+  .v-btn {
+    margin: 5% 0;
+    color: #f8f8f8;
+  }
 }
 
-.v-btn {
-  margin: 5% 0;
-  color: #f8f8f8;
+.social_box {
+  .line {
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.2);
+    font-size: 0.85rem;
+    margin: 3rem 0;
+    text-transform: uppercase;
+    color: #aaa;
+    &::before,
+    &::after {
+      content: "";
+      flex-grow: 1;
+      margin: 0px 14px;
+      background: rgba(0, 0, 0, 0.15);
+      height: 1px;
+      line-height: 0px;
+    }
+  }
 }
 </style>
