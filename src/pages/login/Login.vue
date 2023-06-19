@@ -37,6 +37,9 @@
               rounded="xs"
               size="small"
             ></v-btn>
+            <v-btn @click="googleLogin" rounded="xs" size="small" icon=""
+              ><img src="@/assets/images/g-logo.png" alt=""
+            /></v-btn>
           </div>
         </div>
       </v-card>
@@ -48,6 +51,7 @@
 import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 import Axios from "axios";
+import { googleTokenLogin } from "vue3-google-login";
 const router = useRouter();
 const isShow = ref(false);
 const route = useRoute();
@@ -108,6 +112,12 @@ onMounted(() => {
   naver_id_login.init_naver_id_login();
   naverToken.value = naver_id_login.getAccessToken();
 });
+
+const googleLogin = () => {
+  googleTokenLogin().then((response) => {
+    console.log(response);
+  });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -188,6 +198,9 @@ input {
       margin: 0 5px;
       color: #624a3d;
       border-radius: 3px;
+      img {
+        width: 25px;
+      }
     }
   }
 }
