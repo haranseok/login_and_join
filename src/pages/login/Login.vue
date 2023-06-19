@@ -23,9 +23,21 @@
         </div>
         <div class="social_box">
           <span class="line">or</span>
-          <v-btn color="#fae100" block @click="doKakaoLogin"
-            ><v-icon class="chatIcon">mdi-chat</v-icon>카카오 로그인</v-btn
-          >
+          <div class="btn_wrap">
+            <v-btn
+              color="#fae100"
+              @click="doKakaoLogin"
+              icon="mdi-chat"
+              rounded="xs"
+              size="small"
+            ></v-btn>
+            <v-btn
+              id="naver_id_login"
+              icon=""
+              rounded="xs"
+              size="small"
+            ></v-btn>
+          </div>
         </div>
       </v-card>
     </div>
@@ -34,13 +46,13 @@
 
 <script lang="ts" setup>
 import { useRouter, useRoute } from "vue-router";
-import { ref, watch } from "vue";
+import { ref, onMounted } from "vue";
 import Axios from "axios";
 const router = useRouter();
 const isShow = ref(false);
 const route = useRoute();
 const kakaoCode = ref(route.query);
-
+const naverToken = ref("");
 const user = ref({
   username: "test",
   password: "test1234*",
@@ -72,7 +84,6 @@ const getKakaoToken = (token: any) => {
     client_id: "041576102e9613c9acb57fb766533896",
     redirect_uri: import.meta.env.VITE_APP_KAKAO_REDIRECT,
     code: kakaoCode.value.code,
-    // client_secret: "JHQYbs9IKYmzFzRcKWgEdut8Ucqoy9vq",
   };
   if (token) {
     let data = Axios.post(
@@ -83,7 +94,20 @@ const getKakaoToken = (token: any) => {
     console.log(data);
   }
 };
+
 getKakaoToken(kakaoCode.value.code);
+
+onMounted(() => {
+  const naver_id_login = new window.naver_id_login(
+    "5mAAvwV9lZE3kQ82t5AF",
+    "http://192.168.0.90:5173/"
+  );
+  const state = naver_id_login.getUniqState();
+  //   naver_id_login.setButton("green", 3, 36); // 버튼 설정
+  naver_id_login.setState(state);
+  naver_id_login.init_naver_id_login();
+  naverToken.value = naver_id_login.getAccessToken();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -157,13 +181,13 @@ input {
       line-height: 0px;
     }
   }
-  .v-btn {
-    color: #624a3d;
-    position: relative;
-    font-weight: bold;
-    .chatIcon {
-      position: absolute;
-      left: 10%;
+  .btn_wrap {
+    display: flex;
+    justify-content: center;
+    .v-btn {
+      margin: 0 5px;
+      color: #624a3d;
+      border-radius: 3px;
     }
   }
 }
