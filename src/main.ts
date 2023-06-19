@@ -9,6 +9,8 @@ import i18n from "./i18n";
 import Axios from "axios";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import { initKakao } from "kakao-js-sdk";
+
 const app = createApp(App);
 const pinia = createPinia();
 
@@ -25,3 +27,4 @@ app.use(pinia);
 app.use(vuetify);
 app.use(Router);
 app.mount("#app");
+initKakao("7a1b2deeb0903f905ce7396bf9d826ac");

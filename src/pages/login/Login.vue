@@ -23,6 +23,9 @@
         </div>
         <div class="social_box">
           <span class="line">or</span>
+          <v-btn color="#fae100" block @click="doKakaoLogin"
+            ><v-icon class="chatIcon">mdi-chat</v-icon>카카오 로그인</v-btn
+          >
         </div>
       </v-card>
     </div>
@@ -30,16 +33,19 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-
+import { useRouter, useRoute } from "vue-router";
+import { ref, watch } from "vue";
+import Axios from "axios";
 const router = useRouter();
 const isShow = ref(false);
+const route = useRoute();
+const kakaoCode = ref(route.query);
 
 const user = ref({
   username: "test",
   password: "test1234*",
 });
+
 const doLogin = () => {
   router.push("/home");
 };
@@ -48,6 +54,36 @@ const changePwTpe = () => {
   isShow.value = !isShow.value;
   console.log(isShow.value);
 };
+
+const doKakaoLogin = () => {
+  const params = {
+    redirectUri: import.meta.env.VITE_APP_KAKAO_REDIRECT,
+  };
+  window.Kakao.Auth.authorize(params);
+};
+
+const getKakaoToken = (token: any) => {
+  const kakaoHeaders = {
+    Authorization: "929136f8bc395f6a3ce07ad42d4a9713", // admin key
+    "Content-type": "application/x-www-form-urlencodedlcharset=utf-8",
+  };
+  let params = {
+    grant_type: "authorization_code",
+    client_id: "041576102e9613c9acb57fb766533896",
+    redirect_uri: import.meta.env.VITE_APP_KAKAO_REDIRECT,
+    code: kakaoCode.value.code,
+    // client_secret: "JHQYbs9IKYmzFzRcKWgEdut8Ucqoy9vq",
+  };
+  if (token) {
+    let data = Axios.post(
+      import.meta.env.VITE_APP_KAKAO_API +
+        `/oauth/token?grant_type=${params.grant_type}&client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&code=${params.code}`,
+      { headers: kakaoHeaders }
+    );
+    console.log(data);
+  }
+};
+getKakaoToken(kakaoCode.value.code);
 </script>
 
 <style lang="scss" scoped>
@@ -108,7 +144,7 @@ input {
     align-items: center;
     color: rgba(0, 0, 0, 0.2);
     font-size: 0.85rem;
-    margin: 3rem 0;
+    margin: 2.5rem 0;
     text-transform: uppercase;
     color: #aaa;
     &::before,
@@ -119,6 +155,15 @@ input {
       background: rgba(0, 0, 0, 0.15);
       height: 1px;
       line-height: 0px;
+    }
+  }
+  .v-btn {
+    color: #624a3d;
+    position: relative;
+    font-weight: bold;
+    .chatIcon {
+      position: absolute;
+      left: 10%;
     }
   }
 }
