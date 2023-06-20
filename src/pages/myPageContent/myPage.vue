@@ -6,9 +6,9 @@
         <router-link :to="`/myPage/${list.link}`">
           <v-btn
             variant="plan"
-            rounded="0"
+            rounded="xs"
             :class="{ active: current === i }"
-            @click="currentTab((current = i))"
+            @click="currentTab(i)"
           >
             {{ list.name }}
           </v-btn>
@@ -22,11 +22,14 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 const myPageList = ref([
-  { link: "adress", name: "배송지 등록" },
-  { link: "B", name: "b" },
-  { link: "C", name: "c" },
+  { link: "address", name: "배송지 등록" },
+  //   { link: "B", name: "b" },
+  //   { link: "C", name: "c" },
 ]);
 const current = ref();
+const currentTab = (num: number) => {
+  current.value = num;
+};
 </script>
 
 <style lang="scss" scoped>
@@ -43,9 +46,11 @@ article {
 }
 ul {
   display: flex;
-  justify-content: center;
+  justify-content: end;
   .active {
-    border-bottom: 3px solid #eac805;
+    color: #f5f5ef;
+    font-weight: bold;
+    background: rgb(208, 128, 0);
   }
 }
 </style>

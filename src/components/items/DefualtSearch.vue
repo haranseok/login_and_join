@@ -3,10 +3,10 @@
     <input
       type="text"
       v-model="searchText"
-      @keydown.enter="searchMovies"
+      @keydown.enter="searchEnter"
       placeholder="검색어를 입력해주세요."
     />
-    <v-btn @click="searchMovies">검색</v-btn>
+    <v-btn @click="searchEnter">검색</v-btn>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ import { ref } from "vue";
 const searchText = ref("");
 
 const emits = defineEmits(["searchEnter"]);
-const searchMovies = () => {
+const searchEnter = () => {
   emits("searchEnter", searchText.value);
 };
 </script>
