@@ -78,11 +78,12 @@ const doKakaoLogin = () => {
   window.Kakao.Auth.authorize(params);
 };
 
-const getKakaoToken = (token: any) => {
+const getKakaoToken = async (token: any) => {
   const kakaoHeaders = {
     Authorization: "929136f8bc395f6a3ce07ad42d4a9713", // admin key
     "Content-type": "application/x-www-form-urlencodedlcharset=utf-8",
   };
+
   let params = {
     grant_type: "authorization_code",
     client_id: "041576102e9613c9acb57fb766533896",
@@ -90,7 +91,7 @@ const getKakaoToken = (token: any) => {
     code: kakaoCode.value.code,
   };
   if (token) {
-    let data = Axios.post(
+    let data = await Axios.post(
       import.meta.env.VITE_APP_KAKAO_API +
         `/oauth/token?grant_type=${params.grant_type}&client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&code=${params.code}`,
       { headers: kakaoHeaders }
@@ -107,7 +108,6 @@ onMounted(() => {
     "http://192.168.0.90:5173/"
   );
   const state = naver_id_login.getUniqState();
-  //   naver_id_login.setButton("green", 3, 36); // 버튼 설정
   naver_id_login.setState(state);
   naver_id_login.init_naver_id_login();
   naverToken.value = naver_id_login.getAccessToken();

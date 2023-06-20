@@ -30,7 +30,6 @@ import Search from "@/components/items/DefualtSearch.vue";
 const movies = ref({});
 const searchEnter = async (val: string) => {
   let res = await MovieContentService.getSearchMovie(val);
-  console.log(res);
   movies.value = res.Search;
 };
 </script>

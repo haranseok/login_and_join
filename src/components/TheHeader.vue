@@ -23,13 +23,13 @@ const navigations = ref([
     path: "/home",
     name: "home",
   },
+  //   {
+  //     path: "/movies/:heropy",
+  //     name: "movies",
+  //   },
   {
-    path: "/movies/:heropy",
-    name: "movies",
-  },
-  {
-    path: "/about",
-    name: "about",
+    path: "/myPage",
+    name: "myPage",
   },
 ]);
 </script>

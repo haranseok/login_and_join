@@ -25,19 +25,19 @@ const router = createRouter({
       name: "movie",
       components: {
         TheHeader,
-        default: import("@/pages/movieDetail/Detail.vue"),
+        default: import("@/pages/Detail.vue"),
       },
     },
     {
-      path: "/about",
+      path: "/myPage",
       components: {
         TheHeader,
-        default: import("@/pages/movieDetail/About.vue"),
+        default: import("@/pages/myPageContent/myPage.vue"),
       },
       children: [
         {
-          path: "name",
-          component: () => import("@/pages/movieDetail/AboutChildren.vue"),
+          path: "adress",
+          component: () => import("@/pages/myPageContent/Adress.vue"),
         },
       ],
     },
