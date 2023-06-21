@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div data-aos="zoom-in" data-aos-easing="ease" data-aos-delay="250">
+    <div data-aos="zoom-in" data-aos-easing="ease" data-aos-delay="1000">
       <v-card>
         <p class="title"><strong>login</strong> template</p>
         <div class="form_box">
@@ -45,7 +45,7 @@
         </div>
       </v-card>
     </div>
-    <SignUp v-if="signUpOpen" />
+    <ProgressBar v-if="isProgress" />
   </div>
 </template>
 
@@ -54,20 +54,21 @@ import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 import Axios from "axios";
 import { googleTokenLogin } from "vue3-google-login";
-import SignUp from "@/pages/login/SignUp.vue";
+import ProgressBar from "@/components/items/ProgressBar.vue";
 
 const router = useRouter();
 const isShow = ref(false);
 const route = useRoute();
 const kakaoCode = ref(route.query);
 const naverToken = ref("");
+const isProgress = ref(true);
+
 const user = ref({
   username: "test",
   password: "test1234*",
 });
 const userId = ref("");
 const userPw = ref("");
-const signUpOpen = ref(true);
 
 const doLogin = () => {
   router.push("/home");
@@ -123,6 +124,13 @@ const googleLogin = () => {
     console.log(response);
   });
 };
+
+const showProgress = () => {
+  setTimeout(() => {
+    isProgress.value = false;
+  }, 800);
+};
+showProgress();
 </script>
 
 <style lang="scss" scoped>

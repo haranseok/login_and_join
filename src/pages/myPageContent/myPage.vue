@@ -16,7 +16,6 @@
       </li>
     </ul>
     <LoadingSpinner v-if="isSpinner" />
-    <ProgressBar />
     <router-view></router-view>
   </article>
 </template>
@@ -24,7 +23,6 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import LoadingSpinner from "@/components/items/LoadingSpinner.vue";
-import ProgressBar from "@/components/items/ProgressBar.vue";
 
 const myPageList = ref([
   { link: "address", name: "배송지 등록" },

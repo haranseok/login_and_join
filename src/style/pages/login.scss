@@ -20,7 +20,7 @@ input {
   text-align: center;
   .title {
     margin: 10% 0;
-    strong {
+    & > strong {
       color: #fec422;
     }
   }

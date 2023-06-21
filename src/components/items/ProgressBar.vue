@@ -10,6 +10,7 @@
 .progress_container {
   position: relative;
   width: 100%;
+  max-width: 600px;
   height: 3px;
   background: #f6eac5;
   .progress_fill {

@@ -21,7 +21,7 @@ import { ref } from "vue";
 const navigations = ref([
   {
     path: "/home",
-    name: "home",
+    name: "홈",
   },
   //   {
   //     path: "/movies/:heropy",
@@ -29,7 +29,7 @@ const navigations = ref([
   //   },
   {
     path: "/myPage",
-    name: "myPage",
+    name: "마이페이지",
   },
 ]);
 </script>
