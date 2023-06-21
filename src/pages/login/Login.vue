@@ -4,15 +4,16 @@
       <v-card>
         <p><strong>login</strong> template</p>
         <div class="form_box">
-          <input type="text" placeholder="id" />
+          <input type="text" placeholder="id" v-model="userId" />
           <div class="pw_box">
             <input
               :type="isShow === true ? 'text' : 'password'"
               placeholder="password"
+              v-model="userPw"
             />
             <v-icon
               class="cp"
-              @click="changePwTpe"
+              @click="changePwType"
               color="#d3d3d3"
               :icon="isShow === true ? 'mdi-eye-off' : 'mdi-eye'"
             />
@@ -61,12 +62,13 @@ const user = ref({
   username: "test",
   password: "test1234*",
 });
-
+const userId = ref("");
+const userPw = ref("");
 const doLogin = () => {
   router.push("/home");
 };
 
-const changePwTpe = () => {
+const changePwType = () => {
   isShow.value = !isShow.value;
 };
 
