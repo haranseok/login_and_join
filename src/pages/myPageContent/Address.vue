@@ -23,12 +23,12 @@
         <input
           type="text"
           placeholder="휴대폰 번호 ( '-' 제외 )"
-          @change="setPhone"
           @input="
             $event.target.value = $event.target.value.replace(/[^0-9]/g, '')
           "
         />
       </li>
+      <v-btn block>저장</v-btn>
     </ul>
   </article>
 </template>
@@ -40,15 +40,11 @@ const postNum = ref();
 const setAddress = () => {
   new daum.Postcode({
     oncomplete: function (data: any) {
-      console.log(data);
       address.value = data.address;
       postNum.value = data.zonecode;
-      console.log(address.value);
     },
   }).open();
 };
-
-const setPhone = (e: any) => {};
 </script>
 
 <style lang="scss" scoped>
@@ -88,6 +84,9 @@ const setPhone = (e: any) => {};
         margin: 0 0 1.5% 0;
       }
     }
+  }
+  & > .v-btn {
+    margin-top: 3%;
   }
 }
 </style>

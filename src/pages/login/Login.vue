@@ -68,7 +68,6 @@ const doLogin = () => {
 
 const changePwTpe = () => {
   isShow.value = !isShow.value;
-  console.log(isShow.value);
 };
 
 const doKakaoLogin = () => {
@@ -96,7 +95,6 @@ const getKakaoToken = async (token: any) => {
         `/oauth/token?grant_type=${params.grant_type}&client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&code=${params.code}`,
       { headers: kakaoHeaders }
     );
-    console.log(data);
   }
 };
 

@@ -5,7 +5,7 @@
       <li v-for="(list, i) in myPageList" :key="i">
         <router-link :to="`/myPage/${list.link}`">
           <v-btn
-            variant="plan"
+            variant="plain"
             rounded="xs"
             :class="{ active: current === i }"
             @click="currentTab(i)"
@@ -15,12 +15,14 @@
         </router-link>
       </li>
     </ul>
+    <LoadingSpinner />
     <router-view></router-view>
   </article>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import LoadingSpinner from "@/components/items/LoadingSpinner.vue";
 const myPageList = ref([
   { link: "address", name: "배송지 등록" },
   //   { link: "B", name: "b" },
