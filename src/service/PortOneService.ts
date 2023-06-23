@@ -9,4 +9,14 @@ export class PorOneService {
       }
     });
   }
+
+  static async doRequestPay(params: any) {
+    IMP.request_pay(params, (rsp: any) => {
+      if (rsp.success) {
+        console.log(rsp.success);
+      } else {
+        console.log("pay 실패" + rsp);
+      }
+    });
+  }
 }
