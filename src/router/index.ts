@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import TheHeader from "@/components/TheHeader.vue";
-// import Home from "@/pages/Home.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -43,7 +42,10 @@ const router = createRouter({
     },
     {
       path: "/payment",
-      component: () => import("@/pages/Payment.vue"),
+      components: {
+        TheHeader,
+        default: import("@/pages/Payment.vue"),
+      },
     },
     {
       path: "/:notFound(.*)*",

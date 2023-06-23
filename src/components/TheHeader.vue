@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <!-- <header>
     <div class="inner_container jcsb">
       <p>movie</p>
       <nav>
@@ -12,11 +12,29 @@
         </ul>
       </nav>
     </div>
-  </header>
+  </header> -->
+  <v-app-bar style="border-bottom: 1px solid #efefef; height: 64px">
+    <v-app-bar-nav-icon
+      variant="text"
+      @click="global.setNavDrawer((global.navDrawer = !global.navDrawer))"
+    ></v-app-bar-nav-icon>
+    <nav>
+      <ul class="flex">
+        <li v-for="(nav, i) in navigations" :key="i">
+          <router-link :to="nav.path">
+            {{ nav.name }}
+          </router-link>
+        </li>
+      </ul>
+    </nav>
+  </v-app-bar>
 </template>
 
 <script lnag="ts" setup>
 import { ref } from "vue";
+import { useGlobalStore } from "@/store/GlobalStore";
+
+const global = useGlobalStore();
 
 const navigations = ref([
   {
