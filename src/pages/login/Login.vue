@@ -45,7 +45,7 @@
         </div>
       </v-card>
     </div>
-    <ProgressBar v-if="isProgress" />
+    <ProgressBar class="progress_position" v-if="isProgress" />
   </div>
 </template>
 

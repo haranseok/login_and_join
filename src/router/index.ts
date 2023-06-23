@@ -29,7 +29,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/myPage",
+      path: "/my_page",
       components: {
         TheHeader,
         default: import("@/pages/myPageContent/myPage.vue"),
@@ -40,6 +40,10 @@ const router = createRouter({
           component: () => import("@/pages/myPageContent/Address.vue"),
         },
       ],
+    },
+    {
+      path: "/payment",
+      component: () => import("@/pages/Payment.vue"),
     },
     {
       path: "/:notFound(.*)*",

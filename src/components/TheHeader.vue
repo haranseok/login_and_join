@@ -28,7 +28,11 @@ const navigations = ref([
   //     name: "movies",
   //   },
   {
-    path: "/myPage",
+    path: "/my_page",
+    name: "마이페이지",
+  },
+  {
+    path: "/payment",
     name: "마이페이지",
   },
 ]);
