@@ -1,6 +1,6 @@
 <template>
   <main>
-    <img src="@/assets/images/mainTitle.png" alt="cinema" data-aos="zoom-in" />
+    <img src="@/assets/images/main_title.png" alt="cinema" data-aos="zoom-in" />
   </main>
   <article>
     <Search @searchEnter="searchEnter" />

@@ -33,7 +33,7 @@ const navigations = ref([
   },
   {
     path: "/payment",
-    name: "마이페이지",
+    name: "결제",
   },
 ]);
 </script>

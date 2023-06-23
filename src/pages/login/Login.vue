@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container jcc">
     <div data-aos="zoom-in" data-aos-easing="ease" data-aos-delay="1000">
       <v-card>
         <p class="title"><strong>login</strong> template</p>

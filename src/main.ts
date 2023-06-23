@@ -33,3 +33,6 @@ app.use(vue3GoogleLogin, {
     "803988286583-8903s8ggtvc7faamh0s84oc9ovniud52.apps.googleusercontent.com",
 });
 initKakao("7a1b2deeb0903f905ce7396bf9d826ac");
+
+let IMP = window.IMP;
+IMP.init("imp84326881");

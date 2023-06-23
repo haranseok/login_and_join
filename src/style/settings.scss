@@ -56,6 +56,10 @@ input {
 }
 
 /** display **/
+.max_width {
+  width: min(90%, 1200px);
+}
+
 article {
   padding-top: 5%;
 }
@@ -89,10 +93,6 @@ article {
   display: flex;
   justify-content: end;
   align-items: center;
-}
-
-.max_width {
-  width: min(90%, 1200px);
 }
 
 /** text / font **/
