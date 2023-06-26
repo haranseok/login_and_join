@@ -24,14 +24,22 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { MovieContentService } from "@/service/MovieService";
-
 import Search from "@/components/items/DefualtSearch.vue";
+import { UserInfo } from "@/service/SocialService";
 
 const movies = ref({});
 const searchEnter = async (val: string) => {
   let res = await MovieContentService.getSearchMovie(val);
   movies.value = res.Search;
 };
+
+let token = localStorage.getItem("token");
+const test = async () => {
+  let res = await UserInfo.getUserInfo(token);
+  console.log(res);
+};
+test();
+localStorage.removeItem("code");
 </script>
 
 <style lang="scss" scoped>

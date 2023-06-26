@@ -1,13 +1,20 @@
 import axios from "axios";
 
-const url = import.meta.env.VUE_APP_URL;
-
+const url = import.meta.env.VITE_APP_URL;
+// const header = {
+//   "Content-Type": "application/json",
+// };
 export class Http {
-  static async callApi(query: string, methods: string, params?: any) {
+  static async callApi(
+    query: string,
+    methods: string,
+    params?: any,
+    headers?: any
+  ) {
     let data: any;
     switch (methods.toLowerCase()) {
       case "post":
-        data = await axios.post(url + query, params);
+        data = await axios.post(url + query, params, headers);
         break;
       case "get":
         data = await axios.get(url + query);
@@ -15,4 +22,3 @@ export class Http {
     return data;
   }
 }
-// 2023.06.15 현재 사용 안하는 중

@@ -51,11 +51,12 @@
 
 <script lang="ts" setup>
 import { useRouter, useRoute } from "vue-router";
-import { ref, onMounted, watchEffect } from "vue";
+import { ref, onMounted } from "vue";
 import Axios from "axios";
 import { googleTokenLogin } from "vue3-google-login";
 import ProgressBar from "@/components/items/ProgressBar.vue";
-
+import { LoginService } from "@/service/SocialService";
+import { Social } from "@/assets/ts/pages/Social";
 const router = useRouter();
 const isShow = ref(false);
 const route = useRoute();
@@ -85,44 +86,48 @@ const doKakaoLogin = () => {
   window.Kakao.Auth.authorize(params);
 };
 
-const getKakaoToken = async (token: any) => {
-  const kakaoHeaders = {
-    Authorization: "929136f8bc395f6a3ce07ad42d4a9713", // admin key
-    "Content-type": "application/x-www-form-urlencodedlcharset=utf-8",
-  };
+// const getKakaoToken = async (token: any) => {
+//   const kakaoHeaders = {
+//     Authorization: "929136f8bc395f6a3ce07ad42d4a9713", // admin key
+//     "Content-type": "application/x-www-form-urlencodedlcharset=utf-8",
+//   };
 
-  let params = {
-    grant_type: "authorization_code",
-    client_id: "041576102e9613c9acb57fb766533896",
-    redirect_uri: import.meta.env.VITE_APP_KAKAO_REDIRECT,
-    code: kakaoCode.value.code,
-  };
-  if (token) {
-    let data = await Axios.post(
-      import.meta.env.VITE_APP_KAKAO_API +
-        `/oauth/token?grant_type=${params.grant_type}&client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&code=${params.code}`,
-      { headers: kakaoHeaders }
-    );
-    console.log(data);
-  }
-};
+//   let params = {
+//     grant_type: "authorization_code",
+//     client_id: "041576102e9613c9acb57fb766533896",
+//     redirect_uri: import.meta.env.VITE_APP_KAKAO_REDIRECT,
+//     code: kakaoCode.value.code,
+//   };
+//   if (token) {
+//     let data = await Axios.post(
+//       import.meta.env.VITE_APP_KAKAO_API +
+//         `/oauth/token?grant_type=${params.grant_type}&client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&code=${params.code}`,
+//       { headers: kakaoHeaders }
+//     );
+//     console.log(data);
+//   }
+// };
 
-getKakaoToken(kakaoCode.value.code);
+// getKakaoToken(kakaoCode.value.code);
 
 onMounted(() => {
-  const naver_id_login = new window.naver_id_login(
-    "acdsXrIKUdfGHwwwG9Pj",
-    "http://192.168.0.90:5173/login"
-  );
-  const state = naver_id_login.getUniqState();
-  naver_id_login.response_type = "code";
-  naver_id_login.setState(state);
-  naver_id_login.setPopup();
-  naver_id_login.init_naver_id_login();
+  Social.naverLogin();
   naverCode.value = route.query.code;
   localStorage.setItem("code", naverCode.value);
-  window.close();
+
+  if (localStorage.getItem("code") !== "undefined") {
+    let code = localStorage.getItem("code");
+    doSocialLogin(code, 1);
+  }
 });
+
+const doSocialLogin = async (code: string, type: number) => {
+  let res = await LoginService.doSnsLogin(code, type);
+  if (res.status === 200) {
+    localStorage.setItem("token", res.data.accessToken);
+    router.push("/home");
+  }
+};
 
 const googleLogin = () => {
   googleTokenLogin().then((response) => {
@@ -130,17 +135,6 @@ const googleLogin = () => {
   });
 };
 
-watchEffect(
-  (localStorage.getItem("code"),
-  () => {
-    if (localStorage.getItem("code") !== "undefined") {
-      console.log("d");
-      router.push("/home");
-    }
-    console.log("s");
-  })
-);
-console.log(localStorage.getItem("code"));
 const showProgress = () => {
   setTimeout(() => {
     isProgress.value = false;
@@ -152,3 +146,4 @@ showProgress();
 <style lang="scss" scoped>
 @import url("@/style/pages/login.scss");
 </style>
+@/service/SocialService @/assets/ts/pages/Social
