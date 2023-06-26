@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { MovieContentService } from "@/service/MovieServics";
+import { MovieContentService } from "@/service/MovieService";
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 
@@ -59,3 +59,4 @@ getDetail();
   }
 }
 </style>
+@/service/MovieService

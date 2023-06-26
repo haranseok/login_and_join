@@ -23,7 +23,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { MovieContentService } from "@/service/MovieServics";
+import { MovieContentService } from "@/service/MovieService";
 
 import Search from "@/components/items/DefualtSearch.vue";
 
@@ -67,3 +67,4 @@ ul {
   }
 }
 </style>
+@/service/MovieService

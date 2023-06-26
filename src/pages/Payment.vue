@@ -21,7 +21,7 @@ const data = ref({
 const paymentReq = ref({
   pg: "html5_inicis.INIpayTest",
   pay_method: "card",
-  merchant_uid: "57008833-33004",
+  merchant_uid: "57008833-33003",
   name: "당근 10kg",
   amount: 1004,
   buyer_email: "Iamport@chai.finance",

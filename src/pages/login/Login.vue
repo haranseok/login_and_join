@@ -51,7 +51,7 @@
 
 <script lang="ts" setup>
 import { useRouter, useRoute } from "vue-router";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watchEffect } from "vue";
 import Axios from "axios";
 import { googleTokenLogin } from "vue3-google-login";
 import ProgressBar from "@/components/items/ProgressBar.vue";
@@ -60,7 +60,7 @@ const router = useRouter();
 const isShow = ref(false);
 const route = useRoute();
 const kakaoCode = ref(route.query);
-const naverToken = ref("");
+const naverCode = ref("");
 const isProgress = ref(true);
 
 const user = ref({
@@ -103,6 +103,7 @@ const getKakaoToken = async (token: any) => {
         `/oauth/token?grant_type=${params.grant_type}&client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&code=${params.code}`,
       { headers: kakaoHeaders }
     );
+    console.log(data);
   }
 };
 
@@ -110,13 +111,17 @@ getKakaoToken(kakaoCode.value.code);
 
 onMounted(() => {
   const naver_id_login = new window.naver_id_login(
-    "5mAAvwV9lZE3kQ82t5AF",
-    "http://192.168.0.90:5173/"
+    "acdsXrIKUdfGHwwwG9Pj",
+    "http://192.168.0.90:5173/login"
   );
   const state = naver_id_login.getUniqState();
+  naver_id_login.response_type = "code";
   naver_id_login.setState(state);
+  naver_id_login.setPopup();
   naver_id_login.init_naver_id_login();
-  naverToken.value = naver_id_login.getAccessToken();
+  naverCode.value = route.query.code;
+  localStorage.setItem("code", naverCode.value);
+  window.close();
 });
 
 const googleLogin = () => {
@@ -125,6 +130,17 @@ const googleLogin = () => {
   });
 };
 
+watchEffect(
+  (localStorage.getItem("code"),
+  () => {
+    if (localStorage.getItem("code") !== "undefined") {
+      console.log("d");
+      router.push("/home");
+    }
+    console.log("s");
+  })
+);
+console.log(localStorage.getItem("code"));
 const showProgress = () => {
   setTimeout(() => {
     isProgress.value = false;

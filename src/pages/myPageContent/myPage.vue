@@ -3,7 +3,7 @@
     <h1>my page</h1>
     <ul>
       <li v-for="(list, i) in myPageList" :key="i">
-        <router-link :to="`/myPage/${list.link}`">
+        <router-link :to="`/my_page/${list.link}`">
           <v-btn
             variant="plain"
             rounded="xs"
