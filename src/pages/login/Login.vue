@@ -37,10 +37,16 @@
               icon=""
               rounded="xs"
               size="small"
+              @click="doNaverLogin"
             ></v-btn>
-            <v-btn @click="googleLogin" rounded="xs" size="small" icon=""
-              ><img class="google_logo" src="@/assets/images/g-logo.png" alt=""
-            /></v-btn>
+            <GoogleLogin :callback="googleCode">
+              <v-btn rounded="xs" size="small" icon="">
+                <img
+                  class="google_logo"
+                  src="@/assets/images/g-logo.png"
+                  alt=""
+              /></v-btn>
+            </GoogleLogin>
           </div>
         </div>
       </v-card>
@@ -52,16 +58,14 @@
 <script lang="ts" setup>
 import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
-import Axios from "axios";
-import { googleTokenLogin } from "vue3-google-login";
+import type { CallbackTypes } from "vue3-google-login";
 import ProgressBar from "@/components/items/ProgressBar.vue";
 import { LoginService } from "@/service/SocialService";
 import { Social } from "@/assets/ts/pages/Social";
 const router = useRouter();
 const isShow = ref(false);
 const route = useRoute();
-const kakaoCode = ref(route.query);
-const naverCode = ref("");
+const code = ref("");
 const isProgress = ref(true);
 
 const user = ref({
@@ -84,40 +88,22 @@ const doKakaoLogin = () => {
     redirectUri: import.meta.env.VITE_APP_KAKAO_REDIRECT,
   };
   window.Kakao.Auth.authorize(params);
+  localStorage.setItem("type", "2");
 };
 
-// const getKakaoToken = async (token: any) => {
-//   const kakaoHeaders = {
-//     Authorization: "929136f8bc395f6a3ce07ad42d4a9713", // admin key
-//     "Content-type": "application/x-www-form-urlencodedlcharset=utf-8",
-//   };
-
-//   let params = {
-//     grant_type: "authorization_code",
-//     client_id: "041576102e9613c9acb57fb766533896",
-//     redirect_uri: import.meta.env.VITE_APP_KAKAO_REDIRECT,
-//     code: kakaoCode.value.code,
-//   };
-//   if (token) {
-//     let data = await Axios.post(
-//       import.meta.env.VITE_APP_KAKAO_API +
-//         `/oauth/token?grant_type=${params.grant_type}&client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&code=${params.code}`,
-//       { headers: kakaoHeaders }
-//     );
-//     console.log(data);
-//   }
-// };
-
-// getKakaoToken(kakaoCode.value.code);
+const doNaverLogin = () => {
+  localStorage.setItem("type", "1");
+};
 
 onMounted(() => {
   Social.naverLogin();
-  naverCode.value = route.query.code;
-  localStorage.setItem("code", naverCode.value);
+  code.value = route.query.code;
+  localStorage.setItem("code", code.value);
 
   if (localStorage.getItem("code") !== "undefined") {
     let code = localStorage.getItem("code");
-    doSocialLogin(code, 1);
+    let snsType = localStorage.getItem("type");
+    doSocialLogin(code, snsType);
   }
 });
 
@@ -129,12 +115,10 @@ const doSocialLogin = async (code: string, type: number) => {
   }
 };
 
-const googleLogin = () => {
-  googleTokenLogin().then((response) => {
-    console.log(response);
-  });
+const googleCode: CallbackTypes.CodeResponseCallback = (response) => {
+  console.log(response.code);
+  localStorage.setItem("type", "3");
 };
-
 const showProgress = () => {
   setTimeout(() => {
     isProgress.value = false;
@@ -146,4 +130,3 @@ showProgress();
 <style lang="scss" scoped>
 @import url("@/style/pages/login.scss");
 </style>
-@/service/SocialService @/assets/ts/pages/Social

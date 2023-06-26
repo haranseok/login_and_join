@@ -26,19 +26,21 @@ import { ref } from "vue";
 import { MovieContentService } from "@/service/MovieService";
 import Search from "@/components/items/DefualtSearch.vue";
 import { UserInfo } from "@/service/SocialService";
+import { useGlobalStore } from "@/store/GlobalStore";
 
+const global = useGlobalStore();
 const movies = ref({});
+const token = ref(localStorage.getItem("token"));
 const searchEnter = async (val: string) => {
   let res = await MovieContentService.getSearchMovie(val);
   movies.value = res.Search;
 };
 
-let token = localStorage.getItem("token");
-const test = async () => {
-  let res = await UserInfo.getUserInfo(token);
-  console.log(res);
+const setUserInfo = async () => {
+  let res = await UserInfo.getUserInfo(token.value);
+  global.setUserID(res.data.name);
 };
-test();
+setUserInfo();
 localStorage.removeItem("code");
 </script>
 
@@ -75,4 +77,3 @@ ul {
   }
 }
 </style>
-@/service/MovieService
