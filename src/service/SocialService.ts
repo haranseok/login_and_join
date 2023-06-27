@@ -1,10 +1,11 @@
 import { Http } from "@/api/Http";
 
 export class LoginService {
-  static async doSnsLogin(code: string, type: number) {
+  static async doSnsLogin(code: string, type: number, redirectUrl: string) {
     const res = await Http.callApi(`/api/v1/authority/sns/login`, "post", {
       code: code,
       snsType: type,
+      redirectUrl: redirectUrl,
     });
     return res.data;
   }

@@ -32,14 +32,15 @@ const paymentReq = ref({
   popup: true,
 });
 
-const identityVerification = () => {
+const identityVerification = async () => {
   console.log("본인인증");
-  let res = PorOneService.doIdentityVertification(data.value);
-  console.log(res);
+  let auth = await PorOneService.doIdentityVertification(data.value);
+  console.log(auth);
 };
 
 const doPayment = () => {
   console.log("결제");
+  if (!window.IMP) return;
   PorOneService.doRequestPay(paymentReq.value);
 };
 </script>

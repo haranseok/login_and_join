@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import TheHeader from "@/components/TheHeader.vue";
+import TheSideBar from "@/components/TheSideBar.vue";
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -15,6 +17,7 @@ const router = createRouter({
       path: "/home",
       components: {
         TheHeader,
+        TheSideBar,
         default: import("@/pages/Home.vue"),
       },
       meta: { auth: true },
@@ -24,6 +27,7 @@ const router = createRouter({
       name: "movie",
       components: {
         TheHeader,
+        TheSideBar,
         default: import("@/pages/Detail.vue"),
       },
     },
@@ -31,6 +35,7 @@ const router = createRouter({
       path: "/my_page",
       components: {
         TheHeader,
+        TheSideBar,
         default: import("@/pages/myPageContent/myPage.vue"),
       },
       children: [
@@ -44,6 +49,7 @@ const router = createRouter({
       path: "/payment",
       components: {
         TheHeader,
+        TheSideBar,
         default: import("@/pages/Payment.vue"),
       },
     },

@@ -67,7 +67,7 @@ const isShow = ref(false);
 const route = useRoute();
 const code = ref("");
 const isProgress = ref(true);
-
+const redirectUri = ref();
 const user = ref({
   username: "test",
   password: "test1234*",
@@ -98,17 +98,21 @@ const doNaverLogin = () => {
 onMounted(() => {
   Social.naverLogin();
   code.value = route.query.code;
+  let href = window.location.href;
+  redirectUri.value = href.split("?")[0];
   localStorage.setItem("code", code.value);
-
   if (localStorage.getItem("code") !== "undefined") {
-    let code = localStorage.getItem("code");
     let snsType = localStorage.getItem("type");
-    doSocialLogin(code, snsType);
+    doSocialLogin(code.value, snsType, redirectUri.value);
   }
 });
 
-const doSocialLogin = async (code: string, type: number) => {
-  let res = await LoginService.doSnsLogin(code, type);
+const doSocialLogin = async (
+  code: string,
+  type: number,
+  redirectUrl: string
+) => {
+  let res = await LoginService.doSnsLogin(code, type, redirectUrl);
   if (res.status === 200) {
     localStorage.setItem("token", res.data.accessToken);
     router.push("/home");
