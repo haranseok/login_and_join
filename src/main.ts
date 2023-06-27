@@ -34,5 +34,5 @@ app.use(vue3GoogleLogin, {
 });
 initKakao("bc75ad9398e1d0094f0abad0f9b0b723");
 
-let IMP = window.IMP;
+const { IMP } = window;
 IMP.init("imp84326881");
