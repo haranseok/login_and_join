@@ -39,6 +39,7 @@ const searchEnter = async (val: string) => {
 const setUserInfo = async () => {
   let res = await UserInfo.getUserInfo(token.value);
   global.setUserID(res.data.name);
+  console.log(res);
 };
 setUserInfo();
 localStorage.removeItem("code");

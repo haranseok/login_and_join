@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = import.meta.env.VITE_APP_URL;
+const url = "https://www.omdbapi.com";
 
 export class MovieContentService {
   static async getSearchMovie(searchValue: string) {

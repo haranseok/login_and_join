@@ -14,6 +14,10 @@ const router = createRouter({
       component: () => import("@/pages/login/Login.vue"),
     },
     {
+      path: "/join",
+      component: () => import("@/pages/login/Join.vue"),
+    },
+    {
       path: "/home",
       components: {
         TheHeader,

@@ -22,6 +22,9 @@
             >Login</v-btn
           >
         </div>
+        <div class="join">
+          <router-link to="/join">회원가입</router-link>
+        </div>
         <div class="social_box">
           <span class="line">or</span>
           <div class="btn_wrap">
@@ -39,9 +42,13 @@
               size="small"
               @click="doNaverLogin"
             ></v-btn>
-            <v-btn rounded="xs" size="small" @click="googleLogin">
-              <img class="google_logo" src="@/assets/images/g-logo.png" alt=""
-            /></v-btn>
+            <v-btn rounded="xs" size="small" icon="" @click="doGoogleLogin">
+              <img
+                class="google_logo"
+                src="@/assets/images/g-logo.png"
+                alt=""
+              />
+            </v-btn>
           </div>
         </div>
       </v-card>
@@ -70,7 +77,9 @@ const userId = ref("");
 const userPw = ref("");
 
 const doLogin = () => {
-  router.push("/home");
+  if (userId.value !== "" && userPw.value !== "") {
+    router.push("/home");
+  }
 };
 
 const changePwType = () => {
@@ -113,7 +122,7 @@ const doSocialLogin = async (
   }
 };
 
-const googleLogin = async () => {
+const doGoogleLogin = () => {
   let params = {
     client_id:
       "678295128892-4tu4fhpa2637o13fhs2pumosd5pnj7uf.apps.googleusercontent.com",
