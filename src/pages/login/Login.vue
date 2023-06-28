@@ -39,14 +39,9 @@
               size="small"
               @click="doNaverLogin"
             ></v-btn>
-            <GoogleLogin :callback="googleCode">
-              <v-btn rounded="xs" size="small" icon="">
-                <img
-                  class="google_logo"
-                  src="@/assets/images/g-logo.png"
-                  alt=""
-              /></v-btn>
-            </GoogleLogin>
+            <v-btn rounded="xs" size="small" @click="googleLogin">
+              <img class="google_logo" src="@/assets/images/g-logo.png" alt=""
+            /></v-btn>
           </div>
         </div>
       </v-card>
@@ -58,10 +53,9 @@
 <script lang="ts" setup>
 import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
-import type { CallbackTypes } from "vue3-google-login";
 import ProgressBar from "@/components/items/ProgressBar.vue";
 import { LoginService } from "@/service/SocialService";
-import { Social } from "@/assets/ts/pages/Social";
+
 const router = useRouter();
 const isShow = ref(false);
 const route = useRoute();
@@ -96,7 +90,7 @@ const doNaverLogin = () => {
 };
 
 onMounted(() => {
-  Social.naverLogin();
+  LoginService.naverLogin();
   code.value = route.query.code;
   let href = window.location.href;
   redirectUri.value = href.split("?")[0];
@@ -119,10 +113,19 @@ const doSocialLogin = async (
   }
 };
 
-const googleCode: CallbackTypes.CodeResponseCallback = (response) => {
-  console.log(response.code);
+const googleLogin = async () => {
+  let params = {
+    client_id:
+      "678295128892-4tu4fhpa2637o13fhs2pumosd5pnj7uf.apps.googleusercontent.com",
+    redirect_uri: "http://localhost:5173/login",
+    response_type: "code",
+    state: "aa",
+    scope: "email profile",
+  };
+  LoginService.googleLoginLink(params);
   localStorage.setItem("type", "3");
 };
+
 const showProgress = () => {
   setTimeout(() => {
     isProgress.value = false;

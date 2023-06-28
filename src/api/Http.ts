@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const url = import.meta.env.VITE_APP_URL;
 // const header = {
 //   "Content-Type": "application/json",
 // };
 export class Http {
   static async callApi(
+    url: string,
     query: string,
     methods: string,
     params?: any,

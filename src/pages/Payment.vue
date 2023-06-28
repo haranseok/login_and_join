@@ -40,7 +40,6 @@ const identityVerification = async () => {
 
 const doPayment = () => {
   console.log("결제");
-  if (!window.IMP) return;
   PorOneService.doRequestPay(paymentReq.value);
 };
 </script>
