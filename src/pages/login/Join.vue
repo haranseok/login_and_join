@@ -33,12 +33,6 @@ const isNext = () => {
   }
   console.log(count.value);
 };
-
-const steps = () => {
-  if (count.value === 0) {
-    num.value = false;
-  }
-};
 </script>
 
 <style lang="scss" scoped>
@@ -49,7 +43,7 @@ article {
   text-align: center;
   section {
     width: 500px;
-    margin: 0 auto;
+    margin: 5% auto;
     .circle {
       width: 35px;
       height: 35px;
@@ -77,6 +71,7 @@ article {
       left: 133px;
     }
     .active {
+      transition: 0.5s;
       background: rgb(0, 185, 0);
     }
   }

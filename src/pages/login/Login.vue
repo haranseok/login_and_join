@@ -62,7 +62,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 import ProgressBar from "@/components/items/ProgressBar.vue";
 import { LoginService } from "@/service/SocialService";
-
+import { MobileCheck } from "@/assets/ts/MobileChexk";
 const router = useRouter();
 const isShow = ref(false);
 const route = useRoute();
@@ -76,14 +76,41 @@ const user = ref({
 const userId = ref("");
 const userPw = ref("");
 
-const doLogin = () => {
-  if (userId.value !== "" && userPw.value !== "") {
+const changePwType = () => {
+  isShow.value = !isShow.value;
+};
+
+const getSocialLoginToken = async (
+  code: string,
+  type: number,
+  redirectUrl: string
+) => {
+  let res = await LoginService.doSnsLogin(code, type, redirectUrl);
+  if (res.status === 200) {
+    localStorage.setItem("token", res.data.accessToken);
     router.push("/home");
   }
 };
 
-const changePwType = () => {
-  isShow.value = !isShow.value;
+onMounted(() => {
+  LoginService.naverLogin();
+  if (route.query.code) {
+    code.value = route.query.code;
+  } else if (route.query.mcode) {
+    code.value = route.query.mcode;
+  }
+  let href = window.location.href;
+  redirectUri.value = href.split("?")[0];
+  localStorage.setItem("code", code.value);
+  if (localStorage.getItem("code") !== "undefined") {
+    isMobileCheck();
+  }
+});
+
+const doLogin = () => {
+  //   if (userId.value !== "" && userPw.value !== "") {
+  router.push("/home");
+  //   }
 };
 
 const doKakaoLogin = () => {
@@ -98,27 +125,13 @@ const doNaverLogin = () => {
   localStorage.setItem("type", "1");
 };
 
-onMounted(() => {
-  LoginService.naverLogin();
-  code.value = route.query.code;
-  let href = window.location.href;
-  redirectUri.value = href.split("?")[0];
-  localStorage.setItem("code", code.value);
-  if (localStorage.getItem("code") !== "undefined") {
-    let snsType = localStorage.getItem("type");
-    doSocialLogin(code.value, snsType, redirectUri.value);
-  }
-});
-
-const doSocialLogin = async (
-  code: string,
-  type: number,
-  redirectUrl: string
-) => {
-  let res = await LoginService.doSnsLogin(code, type, redirectUrl);
-  if (res.status === 200) {
-    localStorage.setItem("token", res.data.accessToken);
-    router.push("/home");
+const isMobileCheck = () => {
+  let snsType = localStorage.getItem("type");
+  if (code.value && MobileCheck.any()) {
+    window.location.href = `secrettown://${redirectUri.value}?mcode=${code.value}`;
+    getSocialLoginToken(code.value, snsType, redirectUri.value);
+  } else {
+    getSocialLoginToken(code.value, snsType, redirectUri.value);
   }
 };
 
