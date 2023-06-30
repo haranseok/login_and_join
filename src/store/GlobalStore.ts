@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useGlobalStore = defineStore("GlobalStore", {
   state: () => ({
-    navDrawer: null,
+    drawer: null,
     userID: "",
   }),
   getters: {
@@ -10,7 +10,7 @@ export const useGlobalStore = defineStore("GlobalStore", {
   },
   actions: {
     setNavDrawer(lang: any) {
-      this.navDrawer = lang;
+      this.drawer = lang;
     },
     setUserID(name: string) {
       this.userID = name;

@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="global.navDrawer" temporary>
+  <v-navigation-drawer v-model="global.drawer" temporary>
     <v-list-item
       prepend-avatar="https://randomuser.me/api/portraits/men/78.jpg"
       title="John Leider"

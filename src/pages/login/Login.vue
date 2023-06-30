@@ -94,11 +94,7 @@ const getSocialLoginToken = async (
 
 onMounted(() => {
   LoginService.naverLogin();
-  if (route.query.code) {
-    code.value = route.query.code;
-  } else if (route.query.mcode) {
-    code.value = route.query.mcode;
-  }
+  code.value = route.query.code;
   let href = window.location.href;
   redirectUri.value = href.split("?")[0];
   localStorage.setItem("code", code.value);
@@ -116,6 +112,7 @@ const doLogin = () => {
 const doKakaoLogin = () => {
   const params = {
     redirectUri: import.meta.env.VITE_APP_KAKAO_REDIRECT,
+    throughTalk: false,
   };
   window.Kakao.Auth.authorize(params);
   localStorage.setItem("type", "2");
@@ -127,12 +124,11 @@ const doNaverLogin = () => {
 
 const isMobileCheck = () => {
   let snsType = localStorage.getItem("type");
-  if (code.value && MobileCheck.any()) {
-    window.location.href = `secrettown://${redirectUri.value}?mcode=${code.value}`;
-    getSocialLoginToken(code.value, snsType, redirectUri.value);
-  } else {
-    getSocialLoginToken(code.value, snsType, redirectUri.value);
-  }
+  //   if (code.value && MobileCheck.any()) {
+  //     window.location.href = `secrettown://${redirectUri.value}?mcode=${code.value}`;
+  //   } else {
+  getSocialLoginToken(code.value, snsType, redirectUri.value);
+  //   }
 };
 
 const doGoogleLogin = () => {

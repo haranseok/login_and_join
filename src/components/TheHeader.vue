@@ -1,22 +1,8 @@
 <template>
-  <!-- <header>
-    <div class="inner_container jcsb">
-      <p>movie</p>
-      <nav>
-        <ul class="flex">
-          <li v-for="(nav, i) in navigations" :key="i">
-            <router-link :to="nav.path">
-              {{ nav.name }}
-            </router-link>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </header> -->
-  <v-app-bar style="border-bottom: 1px solid #efefef; height: 64px">
+  <v-app-bar>
     <v-app-bar-nav-icon
       variant="text"
-      @click="global.setNavDrawer((global.navDrawer = !global.navDrawer))"
+      @click="global.setNavDrawer((global.drawer = !global.drawer))"
     ></v-app-bar-nav-icon>
     <nav>
       <ul class="flex">
