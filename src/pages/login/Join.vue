@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <article>
+    <article class="join_inner">
       <h2>join</h2>
       <section class="jcsb step_wrap">
         <div class="step-box" v-for="(num, i) in icons.num" :key="i">
@@ -14,7 +14,7 @@
       <section v-if="count === 0" class="content">step1</section>
       <section v-if="count === 1" class="content">
         <div class="text_box">개인정보....</div>
-        <div class="chexk_box">
+        <div class="check_box">
           <input
             type="checkbox"
             id="agree"
@@ -24,13 +24,15 @@
         </div>
       </section>
       <section v-if="count === 2" class="content">
-        <div class="id_box">
-          <input type="text" placeholder="아이디" />
-          <v-btn size="small">중복확인</v-btn>
-        </div>
-        <div class="pw_box">
-          <input type="password" placeholder="비밀번호" />
-          <input type="password" placeholder="비밀번호 확인" />
+        <div class="form_box">
+          <div class="id_box">
+            <input type="text" placeholder="아이디" autofocus />
+            <v-btn color="rgb(0, 185, 0)">중복확인</v-btn>
+          </div>
+          <div class="pw_box">
+            <input type="password" placeholder="비밀번호" />
+            <input type="password" placeholder="비밀번호 확인" />
+          </div>
         </div>
       </section>
       <section v-if="count === 3" class="content">
@@ -41,6 +43,7 @@
         size="small"
         @click="isNext"
         :disabled="disabled"
+        color="rgb(254, 196, 34)"
         >next</v-btn
       >
     </article>
@@ -58,6 +61,8 @@ if (count.value === 0) {
 const checked = () => {
   if (check.value === true) {
     disabled.value = false;
+  } else {
+    disabled.value = true;
   }
 };
 const icons = ref({
@@ -75,8 +80,7 @@ const isNext = () => {
 </script>
 
 <style lang="scss" scoped>
-@import url("@/style/pages/login.scss");
-article {
+.join_inner {
   max-width: 1200px;
   margin: 5% auto;
   text-align: center;
@@ -128,9 +132,39 @@ article {
     }
   }
 }
-
 .content {
   padding: 5%;
-  background: rgb(239, 242, 243);
+  input[type="password"] {
+    width: 100%;
+  }
+}
+
+input[type="text"],
+input[type="password"] {
+  margin: 5px 0;
+  padding: 2%;
+  border-radius: 5px;
+  background: rgb(240, 241, 237);
+  &::placeholder {
+    font-size: 0.8rem;
+  }
+  &:focus {
+    outline: #a4caac auto 3px;
+  }
+}
+.form_box {
+  .id_box {
+    display: flex;
+    align-items: center;
+    input[type="text"] {
+      width: 80%;
+    }
+    .v-btn {
+      margin-left: 5%;
+      font-weight: bold;
+      font-size: 0.8rem;
+      color: #ffffff;
+    }
+  }
 }
 </style>
