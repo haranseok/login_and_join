@@ -61,8 +61,10 @@
 import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 import ProgressBar from "@/components/items/ProgressBar.vue";
-import { LoginService } from "@/service/SocialService";
+import { SnsLoginService } from "@/service/SocialService";
+import { UserAuthService } from "@/service/UserAuthService";
 import { MobileCheck } from "@/assets/ts/MobileChexk";
+import Axios from "axios";
 const router = useRouter();
 const isShow = ref(false);
 const route = useRoute();
@@ -85,7 +87,7 @@ const getSocialLoginToken = async (
   type: number,
   redirectUrl: string
 ) => {
-  let res = await LoginService.doSnsLogin(code, type, redirectUrl);
+  let res = await SnsLoginService.doSnsLogin(code, type, redirectUrl);
   if (res.status === 200) {
     localStorage.setItem("token", res.data.accessToken);
     router.push("/home");
@@ -93,19 +95,20 @@ const getSocialLoginToken = async (
 };
 
 onMounted(() => {
-  LoginService.naverLogin();
+  SnsLoginService.naverLogin();
   code.value = route.query.code;
   let href = window.location.href;
   redirectUri.value = href.split("?")[0];
   localStorage.setItem("code", code.value);
   if (localStorage.getItem("code") !== "undefined") {
-    isMobileCheck();
+    // isMobileCheck();
+    getKakaoToken(code.value);
   }
 });
 
 const doLogin = () => {
   //   if (userId.value !== "" && userPw.value !== "") {
-  router.push("/home");
+  router.push({ path: "/home", replace: true });
   //   }
 };
 
@@ -116,6 +119,32 @@ const doKakaoLogin = () => {
   };
   window.Kakao.Auth.authorize(params);
   localStorage.setItem("type", "2");
+};
+
+// 카카오톡 로그아웃 구현하면서 임시로 추가
+const getKakaoToken = async (token: any) => {
+  const kakaoHeaders = {
+    Authorization: "929136f8bc395f6a3ce07ad42d4a9713",
+    "Content-type": "application/x-www-form-urlencodedlcharset=utf-8",
+  };
+  let params = {
+    grant_type: "authorization_code",
+    client_id: "041576102e9613c9acb57fb766533896",
+    redirect_uri: import.meta.env.VITE_APP_KAKAO_REDIRECT,
+    code: code.value,
+    // client_secret: "JHQYbs9IKYmzFzRcKWgEdut8Ucqoy9vq",
+  };
+  if (token) {
+    let data = await Axios.post(
+      import.meta.env.VITE_APP_KAKAO_API +
+        `/oauth/token?grant_type=${params.grant_type}&client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&code=${params.code}`,
+      { headers: kakaoHeaders }
+    );
+    localStorage.setItem("access_token", data.data.access_token);
+    if (data.status === 200) {
+      router.push("/home");
+    }
+  }
 };
 
 const doNaverLogin = () => {
@@ -140,7 +169,7 @@ const doGoogleLogin = () => {
     state: "aa",
     scope: "email profile",
   };
-  LoginService.googleLoginLink(params);
+  SnsLoginService.googleLoginLink(params);
   localStorage.setItem("type", "3");
 };
 

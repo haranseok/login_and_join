@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import TheHeader from "@/components/TheHeader.vue";
 import TheSideBar from "@/components/TheSideBar.vue";
+import TheHeader from "@/components/TheHeader.vue";
 
 const router = createRouter({
   history: createWebHistory(),

@@ -26,17 +26,45 @@
       <section v-if="count === 2" class="content">
         <div class="form_box">
           <div class="id_box">
-            <input type="text" placeholder="아이디" autofocus />
-            <v-btn color="rgb(0, 185, 0)">중복확인</v-btn>
+            <input
+              type="text"
+              placeholder="아이디"
+              v-model="userInfo.userID"
+              @focusout="idRegExp"
+              autofocus
+            />
+            <v-btn color="rgb(0, 185, 0)" @click="checkIsDuplication"
+              >중복확인</v-btn
+            >
           </div>
+          <small :class="idCheck === false ? 'perfect' : ''"
+            >영문, 숫자조합 6~15</small
+          >
           <div class="pw_box">
-            <input type="password" placeholder="비밀번호" />
-            <input type="password" placeholder="비밀번호 확인" />
+            <input
+              type="password"
+              placeholder="비밀번호"
+              v-model="userInfo.userPw"
+              @focusout="pwRegExp"
+            />
+            <small :class="pwCheck === false ? 'perfect' : ''"
+              >대소문자 1글자 이상, 숫자, 특수문자 1글자 이상 조합 8~20
+            </small>
+            <input
+              type="password"
+              placeholder="비밀번호 확인"
+              v-model="userInfo.userPwCheck"
+              @focusout="samePwCheck"
+            />
+            <small :class="samePw === false ? 'perfect' : ''"
+              >비밀번호가 일치하지 않습니다.
+            </small>
           </div>
         </div>
       </section>
       <section v-if="count === 3" class="content">
-        <v-icon>mdi-account-check</v-icon>
+        <v-icon color="#FBC02D" size="100">mdi-account-check</v-icon>
+        <p>회원가입이 완료되었습니다.</p>
       </section>
       <v-btn
         append-icon="mdi-chevron-right"
@@ -44,17 +72,38 @@
         @click="isNext"
         :disabled="disabled"
         color="rgb(254, 196, 34)"
+        v-if="count !== 3"
         >next</v-btn
       >
+      <router-link to="/home">
+        <v-btn
+          v-if="count === 3"
+          append-icon="mdi-chevron-right"
+          size="small"
+          color="rgb(254, 196, 34)"
+        >
+          home
+        </v-btn>
+      </router-link>
     </article>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { RegExpCheck } from "@/assets/ts/RegExp";
 const count = ref(0);
 const disabled = ref(true);
 const check = ref(false);
+const userInfo = ref({
+  userID: "",
+  userPw: "",
+  userPwCheck: "",
+});
+const idCheck = ref(true);
+const pwCheck = ref(true);
+const samePw = ref(true);
+const userID = ref("test");
 if (count.value === 0) {
   disabled.value = false;
 }
@@ -75,6 +124,41 @@ const isNext = () => {
   }
   if (disabled.value === false) {
     disabled.value = true;
+  }
+};
+
+const checkIsDuplication = () => {
+  if (userID.value === userInfo.value.userID) {
+    alert("이미 있는 아이디입니다.");
+  } else {
+    alert("사용 가능한 아이디입니다.");
+  }
+};
+
+const idRegExp = () => {
+  let res = RegExpCheck.idRegExpCheck(userInfo.value.userID);
+  if (res === false) {
+    idCheck.value = false;
+  } else {
+    idCheck.value = true;
+  }
+};
+
+const pwRegExp = () => {
+  let res = RegExpCheck.pwRegExpCheck(userInfo.value.userPw);
+  if (res === false) {
+    pwCheck.value = false;
+  } else {
+    pwCheck.value = true;
+  }
+};
+
+const samePwCheck = () => {
+  if (userInfo.value.userPw !== userInfo.value.userPwCheck) {
+    samePw.value = false;
+  } else {
+    samePw.value = true;
+    disabled.value = false;
   }
 };
 </script>
@@ -142,7 +226,7 @@ const isNext = () => {
 input[type="text"],
 input[type="password"] {
   margin: 5px 0;
-  padding: 2%;
+  padding: 1.5%;
   border-radius: 5px;
   background: rgb(240, 241, 237);
   &::placeholder {
@@ -165,6 +249,18 @@ input[type="password"] {
       font-size: 0.8rem;
       color: #ffffff;
     }
+  }
+  small {
+    opacity: 0;
+    display: block;
+    text-align: left;
+    color: rgba(240, 57, 1, 0.877);
+    font-weight: bold;
+    transition: all 0.3s;
+  }
+  .perfect {
+    opacity: 1;
+    transition: all 0.3s;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
-  <main>
+  <v-main>
     <img src="@/assets/images/main_title.png" alt="cinema" data-aos="zoom-in" />
-  </main>
+  </v-main>
   <article>
     <Search @searchEnter="searchEnter" />
     <ul>
@@ -48,7 +48,6 @@ localStorage.removeItem("code");
 <style lang="scss" scoped>
 main {
   width: 100%;
-  height: 450px;
   display: flex;
   justify-content: center;
   align-items: center;

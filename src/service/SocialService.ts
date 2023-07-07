@@ -3,7 +3,7 @@ import { Http } from "@/api/Http";
 const url = import.meta.env.VITE_APP_URL;
 const googleUrl = import.meta.env.VITE_APP_GOOGLE_API;
 
-export class LoginService {
+export class SnsLoginService {
   static async doSnsLogin(code: string, type: number, redirectUrl: string) {
     const res = await Http.callApi(url, `/api/v1/authority/sns/login`, "post", {
       code: code,
