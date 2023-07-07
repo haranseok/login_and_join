@@ -30,18 +30,18 @@ import { useGlobalStore } from "@/store/GlobalStore";
 
 const global = useGlobalStore();
 const movies = ref({});
-const token = ref(localStorage.getItem("token"));
+const token = localStorage.getItem("token");
 const searchEnter = async (val: string) => {
   let res = await MovieContentService.getSearchMovie(val);
   movies.value = res.Search;
 };
 
-const setUserInfo = async () => {
-  let res = await UserInfo.getUserInfo(token.value);
-  global.setUserID(res.data.name);
-  console.log(res);
-};
-setUserInfo();
+// const setUserInfo = async () => {
+//   let res = await UserInfo.getUserInfo(token.value);
+//   global.setUserID(res.data.name);
+//   console.log(res);
+// };
+// setUserInfo();
 localStorage.removeItem("code");
 </script>
 
@@ -73,6 +73,14 @@ ul {
       h4 {
         font-size: 1.2rem;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    img {
+      width: 300px;
     }
   }
 }

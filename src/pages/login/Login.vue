@@ -68,7 +68,7 @@ import Axios from "axios";
 const router = useRouter();
 const isShow = ref(false);
 const route = useRoute();
-const code = ref("");
+const code = ref();
 const isProgress = ref(true);
 const redirectUri = ref();
 const user = ref({
@@ -84,7 +84,7 @@ const changePwType = () => {
 
 const getSocialLoginToken = async (
   code: string,
-  type: number,
+  type: any,
   redirectUrl: string
 ) => {
   let res = await SnsLoginService.doSnsLogin(code, type, redirectUrl);
@@ -116,6 +116,7 @@ const doKakaoLogin = () => {
   const params = {
     redirectUri: import.meta.env.VITE_APP_KAKAO_REDIRECT,
     throughTalk: false,
+    prompts: "login",
   };
   window.Kakao.Auth.authorize(params);
   localStorage.setItem("type", "2");

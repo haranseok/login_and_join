@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="header-inner flex">
+    <div class="inner_container flex">
       <div class="logo">market</div>
       <nav :class="isShow ? 'nav-mobile' : ''">
         <ul class="flex">
@@ -10,13 +10,22 @@
             </li>
           </router-link>
         </ul>
+        <div class="icon-box">
+          <router-link to="/cart">
+            <v-btn
+              icon="mdi-shopping-outline"
+              size="small"
+              variant="plain"
+            ></v-btn>
+          </router-link>
+        </div>
       </nav>
       <div class="menu cp" @click="menuOpen">
         <v-icon>mdi-menu</v-icon>
       </div>
-      <!-- <div class="logout">
+      <div class="logout">
         <v-btn @click="doLogout">logout</v-btn>
-      </div> -->
+      </div>
     </div>
   </header>
 </template>
@@ -29,7 +38,7 @@ import { useRouter } from "vue-router";
 
 const global = useGlobalStore();
 const router = useRouter();
-// const isShow = ref(false);
+const isShow = ref(false);
 const navigations = ref([
   {
     path: "/home",
@@ -40,12 +49,12 @@ const navigations = ref([
   //     name: "movies",
   //   },
   {
-    path: "/my_page",
-    name: "my",
-  },
-  {
     path: "/payment",
     name: "payment",
+  },
+  {
+    path: "/my_page",
+    name: "my",
   },
 ]);
 
@@ -56,7 +65,7 @@ const doLogout = async () => {
     Authorization: `Bearer ${access_token}`,
   };
   let res = await Axios.post(
-    "https://kapi.kakao.com/v1/user/logout",
+    "https://kapi.kakao.com/v1/user/unlink",
     {},
     {
       headers: header,
@@ -79,10 +88,8 @@ header {
   box-shadow: 0px 2px 10px -3px rgba(0, 0, 0, 0.2);
   z-index: 99;
 
-  .header-inner {
-    width: 80%;
+  .inner_container {
     height: 60px;
-    margin: 0 auto;
     align-items: center;
     justify-content: space-between;
     .logo {
@@ -90,6 +97,8 @@ header {
       text-transform: uppercase;
     }
     nav {
+      display: flex;
+      align-items: center;
       ul {
         li {
           margin: 0 5px;
@@ -100,6 +109,15 @@ header {
     .menu {
       display: none;
     }
+  }
+}
+
+@keyframes navMenu {
+  from {
+    right: 0;
+  }
+  to {
+    right: 100%;
   }
 }
 
@@ -117,13 +135,15 @@ header {
         z-index: 99;
         transition: ease 0.5s;
         overflow-x: hidden;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
         ul {
           margin: 0 auto;
           display: flex;
           flex-direction: column;
           li {
-            padding: 2% 0;
-            text-align: center;
+            padding: 10% 0;
             a {
               width: 80%;
             }
@@ -133,6 +153,9 @@ header {
             }
           }
         }
+        .icon-box {
+          margin: 5% 0;
+        }
       }
       .menu {
         display: block;
@@ -140,6 +163,8 @@ header {
       .nav-mobile {
         right: 0;
         transition: ease 0.5s;
+        // animation-name: navMenu;
+        // animation-delay: 0.5s;
       }
     }
   }

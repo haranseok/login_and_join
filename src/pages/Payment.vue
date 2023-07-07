@@ -1,11 +1,11 @@
 <template>
-  <v-main>
+  <v-container>
     <article class="jcc">
       결제 및 본인인증
       <v-btn @click="identityVerification">본인인증</v-btn>
       <v-btn @click="doPayment">결제하기</v-btn>
     </article>
-  </v-main>
+  </v-container>
 </template>
 
 <script lang="ts" setup>
