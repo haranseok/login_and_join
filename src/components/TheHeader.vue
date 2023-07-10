@@ -1,4 +1,11 @@
 <template>
+  <div class="sub-header">
+    <ul class="inner_container flex">
+      <router-link to="/login"> <li>login</li> </router-link>
+      <router-link to="/join"> <li>join</li> </router-link>
+    </ul>
+  </div>
+
   <header>
     <div class="inner_container flex">
       <div class="logo">market</div>
@@ -15,7 +22,7 @@
             <v-btn
               icon="mdi-shopping-outline"
               size="small"
-              variant="plain"
+              variant="text"
             ></v-btn>
           </router-link>
         </div>
@@ -23,9 +30,9 @@
       <div class="menu cp" @click="menuOpen">
         <v-icon>mdi-menu</v-icon>
       </div>
-      <div class="logout">
+      <!-- <div class="logout">
         <v-btn @click="doLogout">logout</v-btn>
-      </div>
+      </div> -->
     </div>
   </header>
 </template>
@@ -82,11 +89,29 @@ const menuOpen = () => {
 </script>
 
 <style lang="scss" scoped>
+.sub-header {
+  width: 100%;
+  height: 25px;
+  background: #f5f5f5;
+  z-index: 9;
+
+  ul {
+    justify-content: end;
+    align-items: center;
+    li {
+      padding: 2px 8px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+  }
+}
 header {
+  position: sticky;
+  top: 0px;
   width: 100%;
   background: #fff;
   box-shadow: 0px 2px 10px -3px rgba(0, 0, 0, 0.2);
-  z-index: 99;
+  z-index: 9;
 
   .inner_container {
     height: 60px;

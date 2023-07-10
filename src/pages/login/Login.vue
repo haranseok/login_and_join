@@ -22,9 +22,6 @@
             >Login</v-btn
           >
         </div>
-        <div class="join">
-          <router-link to="/join">회원가입</router-link>
-        </div>
         <div class="social_box">
           <span class="line">or</span>
           <div class="btn_wrap">

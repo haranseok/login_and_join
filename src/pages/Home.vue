@@ -1,6 +1,7 @@
 <template>
   <v-main>
     <img src="@/assets/images/main_title.png" alt="cinema" data-aos="zoom-in" />
+    <Wheel class="wheel" />
   </v-main>
   <article>
     <Search @searchEnter="searchEnter" />
@@ -25,6 +26,7 @@
 import { ref } from "vue";
 import { MovieContentService } from "@/service/MovieService";
 import Search from "@/components/items/DefualtSearch.vue";
+import Wheel from "@/components/items/ScrollDown.vue";
 import { UserInfo } from "@/service/SocialService";
 import { useGlobalStore } from "@/store/GlobalStore";
 
@@ -47,11 +49,17 @@ localStorage.removeItem("code");
 
 <style lang="scss" scoped>
 main {
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   background: rgb(255, 249, 237);
+  .wheel {
+    position: absolute;
+    bottom: 10px;
+    z-index: 999;
+  }
 }
 .img {
   width: 150px;
